@@ -12,3 +12,120 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Team {
+  name        String   @id @unique
+  players     Player[]
+  homeMatches Match[]  @relation("HomeMatches")
+  awayMatches Match[]  @relation("AwayMatches")
+  homeTeamSituation CurrentSituation[] @relation("HomeTeamSituation")
+  awayTeamSituation CurrentSituation[] @relation("AwayTeamSituation")
+}
+
+model Player {
+  id        String @id @default(cuid())
+  name      String @unique
+  team      Team   @relation(fields: [teamName], references: [name])
+  teamName  String
+  pitcherRecord CurrentSituation[] @relation("pitcher")
+  catcherRecord CurrentSituation[] @relation("catcher")
+  firstBaseFielderRecord CurrentSituation[] @relation("firstBaseFielder")
+  secondBaseFielderRecord CurrentSituation[] @relation("secondBaseFielder")
+  thirdBaseFielderRecord CurrentSituation[] @relation("thirdBaseFielder")
+  shortStopRecord CurrentSituation[] @relation("shortStop")
+  leftFielderRecord CurrentSituation[] @relation("leftFielder")
+  centerFielderRecord CurrentSituation[] @relation("centerFielder")
+  rightFielderRecord CurrentSituation[] @relation("rightFielder")
+  batterRecord CurrentSituation[] @relation("batter")
+
+}
+
+model Match {
+  id          String   @id @default(cuid())
+  matchAt     DateTime
+  homeTeam    Team     @relation("HomeMatches", fields: [homeTeamName], references: [name])
+  homeTeamName String
+  awayTeam    Team     @relation("AwayMatches", fields: [awayTeamName], references: [name])
+  awayTeamName String
+  stadium String
+  weather String
+  homeTeamScore Int @default(0)
+  homeTeamHit Int @default(0)
+  homeTeamB Int @default(0)
+  homeTeamError Int @default(0)
+  awayTeamScore Int @default(0)
+  awayTeamHit Int @default(0)
+  awayTeamB Int @default(0)
+  awayTeamError Int @default(0)
+  records CurrentSituation[]
+
+}
+
+
+model CurrentSituation {
+  id String @id @default(cuid())
+  match Match @relation(fields: [matchId], references: [id])
+  matchId String
+  currentBall Pitch?
+  pitcher Player @relation("pitcher", fields: [pitcherId], references: [id])
+  pitcherId String
+  catcher Player @relation("catcher", fields: [catcherId], references: [id])
+  catcherId String
+  firstBaseFielder Player @relation("firstBaseFielder", fields: [firstBaseFielderId], references: [id])
+  firstBaseFielderId String
+  secondBaseFielder Player @relation("secondBaseFielder", fields: [secondBaseFielderId], references: [id])
+  secondBaseFielderId String
+  thirdBaseFielder Player @relation("thirdBaseFielder", fields: [thirdBaseFielderId], references: [id])
+  thirdBaseFielderId String
+  shortStop Player @relation("shortStop", fields: [shortStopId], references: [id])
+  shortStopId String
+  leftFielder Player @relation("leftFielder", fields: [leftFielderId], references: [id])
+  leftFielderId String
+  centerFielder Player @relation("centerFielder", fields: [centerFielderId], references: [id])
+  centerFielderId String
+  rightFielder Player @relation("rightFielder", fields: [rightFielderId], references: [id])
+  rightFielderId String
+  batter Player @relation("batter", fields: [batterId], references: [id])
+  batterId String
+  ballCount Int @default(0)
+  strikeCount Int @default(0)
+  outCount Int @default(0)
+  inning String @default("top1")
+  homeTeamCurrentScore Int @default(0)
+  awayTeamCurrentScore Int @default(0)
+  homeTeam Team @relation("HomeTeamSituation", fields: [homeTeamName], references: [name])
+  homeTeamName String
+  awayTeam Team @relation("AwayTeamSituation", fields: [awayTeamName], references: [name])
+  awayTeamName String
+}
+
+model Pitch {
+  id String @id @default(cuid())
+  speed Int
+  pitchType PitchType
+  ballStrike BallStrike
+  pitchResult String
+  pitchLocationX Float
+  pitchLocatioY Float
+  currentSituation CurrentSituation @relation(fields: [currentSituationId], references: [id])
+  currentSituationId String @unique
+}
+
+enum PitchType {
+  four_seam_fastball
+  two_seam_fastball
+  curveball
+  slider
+  changeup
+  circle_changeup
+  forkball
+  cutter
+  splitter
+  screwball
+  slurve
+  knuckleball
+}
+enum BallStrike {
+  Ball
+  Strike
+}
