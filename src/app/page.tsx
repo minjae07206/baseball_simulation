@@ -5,6 +5,7 @@ import { setupMatch } from "@/eventhandlers/setupMatch";
 import { setupWorld } from "@/eventhandlers/setupWorld";
 
 export default function Home() {
+  
   return (
     <main>
       <Button onClick={()=>setupWorld()}>Create World</Button>

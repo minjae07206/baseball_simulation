@@ -24,7 +24,7 @@ model Team {
 
 model Player {
   id        String @id @default(cuid())
-  name      String @unique
+  name      String
   team      Team   @relation(fields: [teamName], references: [name])
   teamName  String
   pitcherRecord CurrentSituation[] @relation("pitcher")
