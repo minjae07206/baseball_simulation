@@ -27,6 +27,54 @@ model Player {
   name      String
   team      Team   @relation(fields: [teamName], references: [name])
   teamName  String
+  birthDate DateTime
+  battingArm Arm
+  pitchingArm Arm
+  pitchingArmStyle PitchingArmStyle
+  pitchingStyle Int // Flyball, Groundball
+  // Primary Stats of a player
+  shoulderPower Int
+  legPower Int
+  wristPower Int
+  corePower Int
+  handEyeCoordination Int
+  sophisticated Int
+  baseballIQ Int
+  effort Int
+  flexibility Int
+  speed Int
+  agility Int
+  mentality Int
+  lifeStyle Int
+  durability Int
+  againstLeft Int
+  againstRight Int
+  againstUnder Int
+  creativity Int
+  catching Int
+  stamina Int
+  handling Int
+  adaptability Int
+  DynamicVisualAcuity Int
+  buntAbility Int
+  potential Int
+  battingAbility Int
+  pitchingAbility Int
+  // Secondary Stats
+  stuff Int
+  pitchSpeed Int
+  pitchMovement Int
+  command Int
+  pickoff Int
+  battingEye Int
+  homeRunPower Int
+  contact Int
+  gapPower Int
+  baseRunning Int
+  health Int
+  // Relations
+  defenceStats DefenceStats[] @relation("defender")
+  pitchTypeStats PitchTypeStats[] @relation("pitchTypeStats")
   pitcherRecord CurrentSituation[] @relation("pitcher")
   catcherRecord CurrentSituation[] @relation("catcher")
   firstBaseFielderRecord CurrentSituation[] @relation("firstBaseFielder")
@@ -36,7 +84,55 @@ model Player {
   leftFielderRecord CurrentSituation[] @relation("leftFielder")
   centerFielderRecord CurrentSituation[] @relation("centerFielder")
   rightFielderRecord CurrentSituation[] @relation("rightFielder")
+  designatedHitterRecord CurrentSituation[] @relation("designatedHitter")
   batterRecord CurrentSituation[] @relation("batter")
+
+}
+
+enum Arm {
+  Left 
+  Right
+  Both
+}
+
+enum PitchingArmStyle {
+  Overhand
+  Three_quarters
+  Sidearm
+  Under
+}
+
+model DefenceStats {
+  player Player @relation("defender", fields: [playerId], references: [id])
+  playerId String @id
+  pitcher Int @default(0)
+  firstBaseFielder Int @default(0)
+  secondBaseFielder Int @default(0)
+  thirdBaseFielder Int @default(0)
+  shortStop Int @default(0)
+  catcher Int @default(0)
+  leftFielder Int @default(0)
+  centerFielder Int @default(0)
+  rightFielder Int @default(0)
+
+}
+
+model PitchTypeStats {
+  player Player @relation("pitchTypeStats", fields: [playerId], references: [id])
+  playerId String @id
+  four_seam_fastball Int @default(0)
+  two_seam_fastball Int @default(0)
+  curveball Int @default(0)
+  slider Int @default(0)
+  changeup Int @default(0)
+  circle_changeup Int @default(0)
+  forkball Int @default(0)
+  cutter Int @default(0)
+  splitter Int @default(0)
+  screwball Int @default(0)
+  slurve Int @default(0)
+  knuckleball Int @default(0)
+  sweeper Int @default(0)
 
 }
 
@@ -85,6 +181,8 @@ model CurrentSituation {
   centerFielderId String
   rightFielder Player @relation("rightFielder", fields: [rightFielderId], references: [id])
   rightFielderId String
+  designatedHitter Player @relation("designatedHitter", fields: [designatedHitterId], references: [id])
+  designatedHitterId String
   batter Player @relation("batter", fields: [batterId], references: [id])
   batterId String
   ballCount Int @default(0)
@@ -124,6 +222,7 @@ enum PitchType {
   screwball
   slurve
   knuckleball
+  sweeper
 }
 enum BallStrike {
   Ball
