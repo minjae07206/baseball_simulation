@@ -28,10 +28,10 @@ model Player {
   team      Team   @relation(fields: [teamName], references: [name])
   teamName  String
   birthDate DateTime
-  battingArm Arm
-  pitchingArm Arm
+  battingPitchingArm Arm
   pitchingArmStyle PitchingArmStyle
   pitchingStyle Int // Flyball, Groundball
+  mainPosition MainPosition
   // Primary Stats of a player
   shoulderPower Int
   legPower Int
@@ -53,7 +53,6 @@ model Player {
   creativity Int
   catching Int
   stamina Int
-  handling Int
   adaptability Int
   DynamicVisualAcuity Int
   buntAbility Int
@@ -90,9 +89,12 @@ model Player {
 }
 
 enum Arm {
-  Left 
-  Right
-  Both
+  LeftLeft
+  RightRight
+  LeftBoth
+  RightBoth
+  LeftRight
+  RightLeft
 }
 
 enum PitchingArmStyle {
@@ -100,6 +102,19 @@ enum PitchingArmStyle {
   Three_quarters
   Sidearm
   Under
+}
+
+enum MainPosition {
+  pitcher
+  catcher
+  firstBase
+  secondBase
+  thirdBase
+  shortStop
+  leftFielder
+  centerFielder
+  rightFielder
+  designatedHitter
 }
 
 model DefenceStats {
@@ -114,6 +129,11 @@ model DefenceStats {
   leftFielder Int @default(0)
   centerFielder Int @default(0)
   rightFielder Int @default(0)
+  // Stat for everyone
+  range Int @default(0)
+  throwAccuracy Int @default(0)
+  throwPower Int @default(0)
+  handling Int @default(0)
 
 }
 
@@ -133,6 +153,7 @@ model PitchTypeStats {
   slurve Int @default(0)
   knuckleball Int @default(0)
   sweeper Int @default(0)
+  sinker Int @default(0)
 
 }
 
@@ -223,6 +244,7 @@ enum PitchType {
   slurve
   knuckleball
   sweeper
+  sinker
 }
 enum BallStrike {
   Ball
