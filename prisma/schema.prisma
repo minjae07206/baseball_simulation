@@ -39,6 +39,7 @@ model Player {
   corePower Int
   handEyeCoordination Int
   sophisticated Int
+  activeness Int
   baseballIQ Int
   effort Int
   flexibility Int
@@ -47,8 +48,11 @@ model Player {
   mentality Int
   lifeStyle Int
   durability Int
-  againstLeft Int
-  againstRight Int
+  againstLeftHitter Int
+  againstRightHitter Int
+  againstLeftPitcher Int
+  againstRightPitcher Int
+  againstSidearmUnderPitcher Int
   againstUnder Int
   creativity Int
   catching Int
@@ -60,11 +64,18 @@ model Player {
   battingAbility Int
   pitchingAbility Int
   // Secondary Stats
+
   stuff Int
+  // 
   pitchSpeed Int
   pitchMovement Int
+  releasePoint Int
+  deception Int
+  pitchSpin Int
+  //other pitching stats
   command Int
   pickoff Int
+  //other batting stats
   battingEye Int
   homeRunPower Int
   contact Int
