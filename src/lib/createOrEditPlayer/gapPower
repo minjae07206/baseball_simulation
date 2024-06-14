@@ -1,0 +1,21 @@
+type AttributesEffectingGapPower = {
+    battingAbility: number;
+    speed: number;
+    shoulderPower: number;
+};
+function getRandomNumberBetweenTwoInputs(min: number, max: number): number {
+    // Ensure min and max are integers
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    // Generate random integer between min and max (inclusive)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+export function generateGapPower(attributesEffectingGapPower: AttributesEffectingGapPower): number {
+    return (
+        (attributesEffectingGapPower.battingAbility * 0.15) +
+        (attributesEffectingGapPower.shoulderPower * 0.15) +
+        (attributesEffectingGapPower.speed * 0.4) +
+        (getRandomNumberBetweenTwoInputs(1, 99) * 0.3) 
+    )
+}

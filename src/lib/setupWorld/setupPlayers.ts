@@ -21,6 +21,7 @@ import { generatePickoff } from '@/lib/createOrEditPlayer/pickoff';
 import { generateHealth } from '../createOrEditPlayer/health';
 import { generateEye } from '@/lib/createOrEditPlayer/eye';
 import { generateContact } from '@/lib/createOrEditPlayer/contact';
+import { generateHomerunPower } from '../createOrEditPlayer/homerunPower';
 var koreanNameGenerator = require("korean-name-generator");
 export const setupPlayers = async () => {
     const generator = teamNameGenerator()
@@ -77,6 +78,8 @@ export const setupPlayers = async () => {
                 const attributesEffectingHealth = {durability, lifestyle};
                 const attributesEffectingEye = {baseballIQ, wristPower, sophisticated, DynamicVisualAcuity, activeness};
                 const attributesEffectingContact = {battingAbility, flexibility, handEyeCoordination, sophisticated};
+                const attributesEffectingHomerunPower = {battingAbility, shoulderPower, legPower, corePower};
+                const attributesEffectingGapPower = {battingAbility, speed, shoulderPower};
                 return {
                     name: koreanNameGenerator.generate(true),
                     // The ! is to tell typescript that it is certain the value will not be null or undefined.
@@ -121,6 +124,8 @@ export const setupPlayers = async () => {
                     health: generateHealth(attributesEffectingHealth),
                     eye: generateEye(attributesEffectingEye),
                     contact: generateContact(attributesEffectingContact),
+                    homerunPower: generateHomerunPower(attributesEffectingHomerunPower),
+
                 };
             })
         });
