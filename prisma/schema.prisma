@@ -28,11 +28,12 @@ model Player {
   team      Team   @relation(fields: [teamName], references: [name])
   teamName  String
   birthDate DateTime
-  battingPitchingArm Arm
-  pitchingArmStyle PitchingArmStyle
+  battingPitchingArm String
+  pitchingArmStyle String
   pitchingStyle Int // Flyball, Groundball
-  mainPosition MainPosition
+  mainPosition String
   // Primary Stats of a player
+  height Int
   shoulderPower Int
   legPower Int
   wristPower Int
@@ -53,9 +54,7 @@ model Player {
   againstLeftPitcher Int
   againstRightPitcher Int
   againstSidearmUnderPitcher Int
-  againstUnder Int
   creativity Int
-  catching Int
   stamina Int
   adaptability Int
   DynamicVisualAcuity Int
@@ -77,7 +76,7 @@ model Player {
   pickoff Int
   //other batting stats
   battingEye Int
-  homeRunPower Int
+  homerunPower Int
   contact Int
   gapPower Int
   baseRunning Int
@@ -145,6 +144,7 @@ model DefenceStats {
   throwAccuracy Int @default(0)
   throwPower Int @default(0)
   handling Int @default(0)
+  catching Int @default(0)
 
 }
 

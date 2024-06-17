@@ -1,11 +1,11 @@
 type AttributesEffectingHealth = {
     durability: number;
-    lifestyle: number;
+    lifeStyle: number;
   };
 
 export function generateHealth(attributesEffectingHealth: AttributesEffectingHealth):number {
     return (
-        (attributesEffectingHealth.lifestyle * 0.4) +
+        (attributesEffectingHealth.lifeStyle * 0.4) +
         (attributesEffectingHealth.durability * 0.6)
     )
 }

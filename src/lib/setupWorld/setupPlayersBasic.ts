@@ -11,19 +11,22 @@ import { generateBuntAbility } from '@/lib/createOrEditPlayer/buntAbility';
 import { generatePitchingAbility } from '@/lib/createOrEditPlayer/pitchingAbility';
 import { generateBattingAbility } from '@/lib/createOrEditPlayer/battingAbility';
 import { generateStuff } from '@/lib/createOrEditPlayer/stuff';
-import { generateBallSpeed } from '@/lib/createOrEditPlayer/ballSpeed';
-import { generateBallMovement } from '@/lib/createOrEditPlayer/ballMovement';
+import { generatePitchSpeed } from '@/lib/createOrEditPlayer/pitchSpeed';
+import { generatePitchMovement } from '@/lib/createOrEditPlayer/pitchMovement';
 import { generateReleasePoint } from '@/lib/createOrEditPlayer/releasePoint';
-import { generateBallSpin } from '@/lib/createOrEditPlayer/ballSpin';
+import { generatePitchSpin } from '@/lib/createOrEditPlayer/pitchSpin';
 import { generateDeception } from '@/lib/createOrEditPlayer/deception';
 import { generateControl } from '@/lib/createOrEditPlayer/control';
 import { generatePickoff } from '@/lib/createOrEditPlayer/pickoff';
 import { generateHealth } from '../createOrEditPlayer/health';
-import { generateEye } from '@/lib/createOrEditPlayer/eye';
+import { generateBattingEye } from '@/lib/createOrEditPlayer/battingEye';
 import { generateContact } from '@/lib/createOrEditPlayer/contact';
-import { generateHomerunPower } from '../createOrEditPlayer/homerunPower';
+import { generateHomerunPower } from '@/lib/createOrEditPlayer/homerunPower';
+import { generateGapPower } from '@/lib/createOrEditPlayer/gapPower';
+import { generateBaseRunning } from '@/lib/createOrEditPlayer/baseRunning';
+import { generateHeight } from '@/lib/createOrEditPlayer/height';
 var koreanNameGenerator = require("korean-name-generator");
-export const setupPlayers = async () => {
+export const setupPlayersBasic = async () => {
     const generator = teamNameGenerator()
     try {
         await db.player.createMany({
@@ -51,10 +54,9 @@ export const setupPlayers = async () => {
                 const speed = getRandomNumberBetweenTwoInputs(1, 99);
                 const agility = getRandomNumberBetweenTwoInputs(1, 99);
                 const mentality = getRandomNumberBetweenTwoInputs(1, 99);
-                const lifestyle = getRandomNumberBetweenTwoInputs(1, 99);
+                const lifeStyle = getRandomNumberBetweenTwoInputs(1, 99);
                 const durability = getRandomNumberBetweenTwoInputs(1, 99);
                 const creativity = getRandomNumberBetweenTwoInputs(1, 99);
-                const catching = getRandomNumberBetweenTwoInputs(1, 99);
                 const stamina = getRandomNumberBetweenTwoInputs(30, 95);
                 const adaptability = getRandomNumberBetweenTwoInputs(1, 99);
                 const DynamicVisualAcuity = getRandomNumberBetweenTwoInputs(1, 99);
@@ -62,24 +64,26 @@ export const setupPlayers = async () => {
                 const potential = getRandomNumberBetweenTwoInputs(1, 99);
                 const battingAbility = generateBattingAbility(mainPosition);
                 const pitchingAbility = generatePitchingAbility(mainPosition);
-                const attributesEffectingBallSpeed = {shoulderPower, legPower, corePower};
-                const ballSpeed = generateBallSpeed(attributesEffectingBallSpeed);
-                const attributesEffectingBallMovement = {shoulderPower, wristPower, pitchingAbility};
-                const ballMovement = generateBallMovement(attributesEffectingBallMovement);
-                const attributesEffectingBallSpin = {shoulderPower, wristPower, legPower, corePower, pitchingAbility};
-                const ballSpin = generateBallSpin(attributesEffectingBallSpin);
+                const attributesEffectingPitchSpeed = {shoulderPower, legPower, corePower};
+                const pitchSpeed = generatePitchSpeed(attributesEffectingPitchSpeed);
+                const attributesEffectingPitchMovement = {shoulderPower, wristPower, pitchingAbility};
+                const pitchMovement = generatePitchMovement(attributesEffectingPitchMovement);
+                const attributesEffectingPitchSpin = {shoulderPower, wristPower, legPower, corePower, pitchingAbility};
+                const pitchSpin = generatePitchSpin(attributesEffectingPitchSpin);
                 const attributesEffectingDeception = {baseballIQ, flexibility, creativity, pitchingAbility};
                 const deception = generateDeception(attributesEffectingDeception);
                 const attributesEffectingReleasePoint = {wristPower, sophisticated, flexibility, pitchingAbility};
                 const releasePoint = generateReleasePoint(attributesEffectingReleasePoint);
-                const attributesEffectingStuff = {ballSpeed, ballMovement, ballSpin, deception, releasePoint};
-                const attributesEffectingControl = {handEyeCoordination, sophisticated, effort, flexibility, pitchingAbility, corePower};
+                const attributesEffectingStuff = {pitchSpeed, pitchMovement, pitchSpin, deception, releasePoint};
+                const attributesEffectingCommand = {handEyeCoordination, sophisticated, effort, flexibility, pitchingAbility, corePower};
                 const attributesEffectingPickoff = {shoulderPower, agility, baseballIQ};
-                const attributesEffectingHealth = {durability, lifestyle};
-                const attributesEffectingEye = {baseballIQ, wristPower, sophisticated, DynamicVisualAcuity, activeness};
+                const attributesEffectingHealth = {durability, lifeStyle};
+                const attributesEffectingBattingEye = {baseballIQ, wristPower, sophisticated, DynamicVisualAcuity, activeness};
                 const attributesEffectingContact = {battingAbility, flexibility, handEyeCoordination, sophisticated};
                 const attributesEffectingHomerunPower = {battingAbility, shoulderPower, legPower, corePower};
                 const attributesEffectingGapPower = {battingAbility, speed, shoulderPower};
+                const attributesEffectingBaseRunning = {baseballIQ, speed, agility, legPower};
+                const height = generateHeight();
                 return {
                     name: koreanNameGenerator.generate(true),
                     // The ! is to tell typescript that it is certain the value will not be null or undefined.
@@ -102,7 +106,8 @@ export const setupPlayers = async () => {
                     speed: speed,
                     agility: agility,
                     mentality: mentality,
-                    lifestyle: lifestyle,
+                    lifeStyle: lifeStyle,
+                    height: height,
                     durability: durability,
                     againstLeftHitter: againstLeftHitter,
                     againstRightHitter: againstRightHitter,
@@ -110,26 +115,31 @@ export const setupPlayers = async () => {
                     againstRightPitcher: againstRightPitcher,
                     againstSidearmUnderPitcher: againstSidearmUnderPitcher,
                     creativity: creativity,
-                    catching: catching,
                     stamina: stamina,
                     adaptability: adaptability,
                     DynamicVisualAcuity: DynamicVisualAcuity,
                     buntAbility: buntAbility,
                     potential: potential,
+                    pitchSpeed: pitchSpeed,
+                    pitchMovement: pitchMovement,
+                    pitchSpin: pitchSpin,
                     battingAbility: battingAbility,
                     pitchingAbility: pitchingAbility,
+                    deception: deception,
+                    releasePoint: releasePoint,
                     stuff: generateStuff(attributesEffectingStuff),
-                    control: generateControl(attributesEffectingControl),
+                    command: generateControl(attributesEffectingCommand),
                     pickoff: generatePickoff(attributesEffectingPickoff),
                     health: generateHealth(attributesEffectingHealth),
-                    eye: generateEye(attributesEffectingEye),
+                    battingEye: generateBattingEye(attributesEffectingBattingEye),
                     contact: generateContact(attributesEffectingContact),
                     homerunPower: generateHomerunPower(attributesEffectingHomerunPower),
-
+                    gapPower: generateGapPower(attributesEffectingGapPower),
+                    baseRunning: generateBaseRunning(attributesEffectingBaseRunning),
                 };
             })
         });
-        return { success: "Players generated successfully" }
+        return { success: "Players generated successfully" };
     } catch (error) {
         console.log(error)
         return { error: "Something went wrong with creating players" };
