@@ -161,9 +161,7 @@ model PitchTypeStats {
   cutter Int @default(0)
   splitter Int @default(0)
   screwball Int @default(0)
-  slurve Int @default(0)
   knuckleball Int @default(0)
-  sweeper Int @default(0)
   sinker Int @default(0)
 
 }
