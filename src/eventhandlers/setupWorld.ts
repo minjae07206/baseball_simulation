@@ -7,7 +7,8 @@ export const setupWorld = async () => {
         await setupTeams();
         await setupPlayersBasic();
         await setupPlayerDefenceStat();
-        await setupPlayerPitchTypeStat();
+        const value = await setupPlayerPitchTypeStat();
+        console.log(value)
 
     } catch(error) {
     }

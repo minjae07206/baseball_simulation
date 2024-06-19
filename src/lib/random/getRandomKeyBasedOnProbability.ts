@@ -5,8 +5,9 @@ interface ProbabilityObject {
 export function getRandomKeyBasedOnProbability(probabilities: ProbabilityObject): string {
     const entries = Object.entries(probabilities);
     const sum = entries.reduce((acc, [, value]) => acc + value, 0);
-    
-    if (sum !== 100) {
+    // Define a small tolerance for floating-point precision issues
+    const tolerance = 1e-9;
+    if (Math.abs(sum - 100) > tolerance) {
         throw new Error("The sum of all probabilities must equal 100%");
     }
 

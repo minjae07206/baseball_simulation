@@ -42,7 +42,6 @@ export function generatePitchTypeStat(mainPosition:string):PitchTypes {
         "7": 1,
         "8": 0.5,
         "9": 0.1
-
     }
     const pitchTypeProbability = {
         four_seam_fastball: 0,
@@ -58,9 +57,14 @@ export function generatePitchTypeStat(mainPosition:string):PitchTypes {
         knuckleball: 0,
         sinker: 0
     }
-    const numberOfPitchTypes = getRandomKeyBasedOnProbability(pitchTypeNumberProbability);
-    let currentNumberOfPitchTypes = 0;
-    let cantBeTogetherTotal = 0;
+    let numberOfPitchTypes:string = '0';
+    if (mainPosition === "pitcher") {
+        numberOfPitchTypes = getRandomKeyBasedOnProbability(pitchTypeNumberProbability);
+    } else {
+        numberOfPitchTypes = '2';
+    }
+    let currentNumberOfPitchTypes:number = 0;
+    let cantBeTogetherTotal:number = 0;
     const pitchTypesThatCantBeTogether = ["changeup", "circle_changeup", "forkball", "splitter"];
     let cantBeTogetherSelected = false;
     while (parseInt(numberOfPitchTypes) > currentNumberOfPitchTypes) {
@@ -72,8 +76,8 @@ export function generatePitchTypeStat(mainPosition:string):PitchTypes {
             }) as keyof PitchTypes;
             pitchTypeStats[selectedPitchType] = getRandomNumberBetweenTwoInputs(20, 99)
         } else if (currentNumberOfPitchTypes === 0) {
-            pitchTypeProbability.four_seam_fastball = 60;
-            pitchTypeProbability.two_seam_fastball = 30;
+            pitchTypeProbability.four_seam_fastball = 70;
+            pitchTypeProbability.two_seam_fastball = 20;
             pitchTypeProbability.cutter = 10;
             selectedPitchType = getRandomKeyBasedOnProbability(pitchTypeProbability) as keyof PitchTypes;
             pitchTypeStats[selectedPitchType] = getRandomNumberBetweenTwoInputs(20, 99)
@@ -102,29 +106,52 @@ export function generatePitchTypeStat(mainPosition:string):PitchTypes {
                 pitchTypeProbability.splitter = 0;
                 pitchTypeProbability.forkball = 0; 
                 for (let pitchType in pitchTypeStats) {
+                    if (pitchType === "screwball" || pitchType === "knuckleball"){
+                        continue
+                    }
                     if (pitchTypeStats[pitchType as keyof PitchTypes] === 0 && !pitchTypesThatCantBeTogether.includes(pitchType)) {
-                        pitchTypeProbability[pitchType as keyof PitchTypes] += cantBeTogetherTotal / (Object.keys(pitchTypeProbability).length - currentNumberOfPitchTypes + 4);
+                        pitchTypeProbability[pitchType as keyof PitchTypes] += cantBeTogetherTotal / (Object.keys(pitchTypeProbability).length - currentNumberOfPitchTypes - 6);
+                        pitchTypeProbability[pitchType as keyof PitchTypes] = Math.round(pitchTypeProbability[pitchType as keyof PitchTypes] * 100) / 100;
                     }
                 }
             
             } else if (cantBeTogetherSelected) {
                 for (let pitchType in pitchTypeStats) {
+                    if (pitchType === "screwball" || pitchType === "knuckleball"){
+                        continue
+                    }
                     if (pitchTypeStats[pitchType as keyof PitchTypes] === 0 && !pitchTypesThatCantBeTogether.includes(pitchType)) {
-                        pitchTypeProbability[pitchType as keyof PitchTypes] += cantBeTogetherTotal / (Object.keys(pitchTypeProbability).length - currentNumberOfPitchTypes + 4);
+                        pitchTypeProbability[pitchType as keyof PitchTypes] += pitchTypeProbability[selectedPitchType] / (Object.keys(pitchTypeProbability).length - currentNumberOfPitchTypes - 6);
+                        pitchTypeProbability[pitchType as keyof PitchTypes] = Math.round(pitchTypeProbability[pitchType as keyof PitchTypes] * 100) / 100;
                     }
                 }
             } else {
                 for (let pitchType in pitchTypeStats) {
+                    if (pitchType === "screwball" || pitchType === "knuckleball"){
+                        continue
+                    }
                     if (pitchTypeStats[pitchType as keyof PitchTypes] === 0) {
-                        pitchTypeProbability[pitchType as keyof PitchTypes] += pitchTypeProbability[selectedPitchType] / (Object.keys(pitchTypeProbability).length - currentNumberOfPitchTypes + 1);
+                        pitchTypeProbability[pitchType as keyof PitchTypes] += pitchTypeProbability[selectedPitchType] / (Object.keys(pitchTypeProbability).length - currentNumberOfPitchTypes - 3);
+                        pitchTypeProbability[pitchType as keyof PitchTypes] = Math.round(pitchTypeProbability[pitchType as keyof PitchTypes] * 100) / 100;
                     } 
                 }
+                cantBeTogetherTotal = pitchTypeProbability.changeup + pitchTypeProbability.circle_changeup + pitchTypeProbability.forkball + pitchTypeProbability.splitter;
             }
            
             pitchTypeProbability[selectedPitchType] = 0;
         }
+        let entries = Object.entries(pitchTypeProbability);
+        let sum = entries.reduce((acc, [, value]) => acc + value, 0);
+        if (sum != 100) {
+            for(let pitchType in pitchTypeProbability) {
+                if (pitchTypeProbability[pitchType as keyof PitchTypes] > 0) {
+                    pitchTypeProbability[pitchType as keyof PitchTypes] += 100 - sum;
+                    break;
+                }
+            }
+        }
         currentNumberOfPitchTypes += 1;
     }
+    
     return pitchTypeStats;
-
 }

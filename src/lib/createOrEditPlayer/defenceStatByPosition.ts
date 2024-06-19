@@ -164,8 +164,8 @@ export function generateDefenceStatByPosition(mainPosition: string, battingPitch
         if (thirdBaseRandomValue < 0.05 && battingPitchingArm.slice(5) === "Right") {
             defenceStatByPosition.thirdBaseFielder = getRandomNumberBetweenTwoInputs(40, 99);
         }
-        defenceStatByPosition.centerFielder = defenceStatByPosition.leftFielder + getRandomNumberBetweenTwoInputs(-20, 0);
-        defenceStatByPosition.leftFielder = defenceStatByPosition.leftFielder + getRandomNumberBetweenTwoInputs(-20, 0);
+        defenceStatByPosition.centerFielder = defenceStatByPosition.rightFielder + getRandomNumberBetweenTwoInputs(-20, 0);
+        defenceStatByPosition.leftFielder = defenceStatByPosition.rightFielder + getRandomNumberBetweenTwoInputs(-20, 0);
         if (catcherRandomValue < 0.01 && battingPitchingArm.slice(5) === "Right") {
             defenceStatByPosition.catcher = getRandomNumberBetweenTwoInputs(10, 70);
         }
