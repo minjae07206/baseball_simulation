@@ -19,11 +19,11 @@ export function generateRandomPosition(): string {
     } else if (randomValue < catcherChance / 28) {
         return "catcher";
     } else if (randomValue < firstBaseChance / 28) {
-        return "firstBase";
+        return "firstBaseFielder";
     } else if (randomValue < secondBaseChance / 28){
-        return "secondBase";
+        return "secondBaseFielder";
     } else if (randomValue < thirdBaseChance / 28) {
-        return "thirdBase";
+        return "thirdBaseFielder";
     } else if (randomValue < shortStopChance / 28) {
         return "shortStop";
     } else if (randomValue < leftFielderChance / 28) {
