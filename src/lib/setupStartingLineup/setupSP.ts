@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
-export async function setupStartingPitcher(teamName:string) {
+import { Player } from "../types";
+export async function setupStartingPitcher(teamName:string):Promise<Player>{
     try {
         const pitchers = await db.player.findMany({
             where: {
@@ -9,10 +10,10 @@ export async function setupStartingPitcher(teamName:string) {
         });
 
         const randomIndex = Math.floor(Math.random() * pitchers.length);
-        const selectedPitcher = pitchers[randomIndex];
+        const selectedPitcher:Player = pitchers[randomIndex];
 
         return selectedPitcher;
     } catch(error) {
-        return error;
+        throw new Error;
     }
 }

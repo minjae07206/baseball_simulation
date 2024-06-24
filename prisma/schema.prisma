@@ -183,6 +183,11 @@ model Match {
   awayTeamHit Int @default(0)
   awayTeamB Int @default(0)
   awayTeamError Int @default(0)
+  homeStartingLineup Json
+  awayStartingLineup Json
+  homeBattingOrder Json
+  awayBattingOrder Json
+  currentInning String
   records CurrentSituation[]
 
 }

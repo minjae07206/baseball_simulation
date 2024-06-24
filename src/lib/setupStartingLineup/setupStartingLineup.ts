@@ -1,6 +1,6 @@
 import { setupStartingPitcher } from "@/lib/setupStartingLineup/setupSP";
 import { setupFielderLineup } from "@/lib/setupStartingLineup/setFielderLineup";
-
+import { Player, StartingLineup } from "@/lib/types";
 export async function setupStartingLineup(homeTeam: string, awayTeam: string) {
     const [homePitcher, awayPitcher] = await Promise.all([
         setupStartingPitcher(homeTeam),
@@ -11,8 +11,8 @@ export async function setupStartingLineup(homeTeam: string, awayTeam: string) {
         setupFielderLineup(awayPitcher, homeTeam), // Home team fielder lineup based on away pitcher
         setupFielderLineup(homePitcher, awayTeam)  // Away team fielder lineup based on home pitcher
     ]);
-
-    const homeStartingLineup = {
+    console.log(typeof(homePitcher))
+    const homeStartingLineup:StartingLineup = {
         pitcher: homePitcher,
         catcher: homeFielderLineup.catcher,
         firstBaseFielder: homeFielderLineup.firstBaseFielder,
@@ -25,7 +25,7 @@ export async function setupStartingLineup(homeTeam: string, awayTeam: string) {
         designatedHitter: homeFielderLineup.designatedHitter
     };
 
-    const awayStartingLineup = {
+    const awayStartingLineup:StartingLineup = {
         pitcher: awayPitcher,
         catcher: awayFielderLineup.catcher,
         firstBaseFielder: awayFielderLineup.firstBaseFielder,
