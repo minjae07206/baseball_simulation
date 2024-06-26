@@ -23,7 +23,7 @@ export async function setupFielderLineup(pitcher: any, team: string) {
             teamName: team,
         },
         include: {
-            defenceStats: true,
+            defenceStats: true
         },
     });
     const positions: (keyof DefenceStats)[] = [

@@ -1,10 +1,10 @@
 import { db } from "@/lib/db";
-import { Match } from "@/lib/types";
+import { MatchType } from "@/lib/types";
 import { NextResponse } from "next/server";
 export async function GET(){
-    const matchData:Match = await db.match.findFirst({
+    const matchData:MatchType = await db.match.findFirst({
         where: {
-            id: "clxsvhag30001uyg7zfkb7rwh"
+            id: "clxvpdmdo0001ormr8aesbz65"
         }
     });
     return NextResponse.json(matchData);

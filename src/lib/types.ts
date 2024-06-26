@@ -70,7 +70,7 @@ export type StartingLineup = {
     designatedHitter: Player;
 };
 
-export type Match = {
+export type MatchType = {
     id: string;
     matchAt: Date;
     homeTeamName: string;
