@@ -1,7 +1,7 @@
 import { generatePitchType } from "@/lib/match/generatePitchType";
 
 export function pitcherBatterFight(record:any) {
-    const pitchType = generatePitchType(record.pitcher)
+    const pitchType = generatePitchType(record.pitcher);
     while (record.strikeCount < 3 || record.ballCount < 4) {
         //do some in between stuff. sometimes 견제 if there are people on bases.
         //inBetweenStuff(record)

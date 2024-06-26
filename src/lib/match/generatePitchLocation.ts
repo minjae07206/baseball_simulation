@@ -1,3 +1,3 @@
-export function generateBallLocation(pitchType:string) {
+export function generateBallLocation(pitchType:string, record:any) {
     
 }
