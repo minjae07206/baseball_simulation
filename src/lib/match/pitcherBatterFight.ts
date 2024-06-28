@@ -1,5 +1,5 @@
 import { generatePitchType } from "@/lib/match/generatePitchType";
-
+import { generatePitchLocation } from "@/lib/match/generatePitchLocation";
 export function pitcherBatterFight(record:any) {
     const pitchType = generatePitchType(record.pitcher);
     while (record.strikeCount < 3 || record.ballCount < 4) {
