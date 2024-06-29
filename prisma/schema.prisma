@@ -197,7 +197,6 @@ model CurrentSituation {
   id String @id @default(cuid())
   match Match @relation(fields: [matchId], references: [id])
   matchId String
-  currentBall Pitch?
   pitcher Player @relation("pitcher", fields: [pitcherId], references: [id])
   pitcherId String
   catcher Player @relation("catcher", fields: [catcherId], references: [id])
@@ -240,8 +239,6 @@ model Pitch {
   pitchResult String
   pitchLocationX Float
   pitchLocatioY Float
-  currentSituation CurrentSituation @relation(fields: [currentSituationId], references: [id])
-  currentSituationId String @unique
 }
 
 enum PitchType {
@@ -255,9 +252,7 @@ enum PitchType {
   cutter
   splitter
   screwball
-  slurve
   knuckleball
-  sweeper
   sinker
 }
 enum BallStrike {
