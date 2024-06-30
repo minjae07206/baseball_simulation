@@ -1,6 +1,5 @@
 export function generatePitchType(pitcher: any) {
     const pitchTypes: Record<string, number | string> = pitcher.pitchTypeStats[0];
-    console.log(pitchTypes)
     let maxPitchValue: number = 0;
     let pitchTypeList: { [key: string]: number } = {};
 
@@ -63,7 +62,6 @@ export function generatePitchType(pitcher: any) {
     // Randomly select a pitch type based on these probabilities
     const randomValue = Math.random();
     let cumulativeProbability = 0;
-    console.log(normalizedProbabilities)
     for (const [key, value] of Object.entries(normalizedProbabilities)) {
         cumulativeProbability += value;
         if (randomValue <= cumulativeProbability) {

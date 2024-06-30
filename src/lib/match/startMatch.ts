@@ -4,11 +4,13 @@ export function startMatch (match:any, actions:any) {
     let homeBattingCount = 0;
     let awayBattingCount = 0;
     const homeStartingLineup = JSON.parse(match.homeStartingLineup);
-    const awayStartingLineup = JSON.parse(match.awayStartingLineup)
+    const awayStartingLineup = JSON.parse(match.awayStartingLineup);
+    const homeBattingOrder = JSON.parse(match.homeBattingOrder);
+    const awayBattingOrder = JSON.parse(match.awayBattingOrder);
     const record = {
         pitches: [],
         pitcher: homeStartingLineup.pitcher,
-        batter: match.awayBattingOrder[homeBattingCount],
+        batter: awayBattingOrder[homeBattingCount],
         firstbase: null,
         secondbase: null,
         thirdbase: null,
