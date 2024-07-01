@@ -19,6 +19,8 @@ export function startMatch (match:any, actions:any) {
         outCount: 0,
         special: [],
         result: "pending",
+        inningNumber: 1,
+        inningTopBottom: "top",
         homeTeamScore: match.homeTeamScore,
         awayTeamScore: match.awayTeamScore,
     }

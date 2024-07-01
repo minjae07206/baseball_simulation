@@ -2,6 +2,7 @@ import { getIntention } from "@/lib/match/pitcherBatterFight/pitcherSide/getInte
 import { getDirection } from "@/lib/match/pitcherBatterFight/pitcherSide/getDirection";
 import { getPitchLocationXY } from "@/lib/match/pitcherBatterFight/pitcherSide/getPitchLocationXY";
 import { getIntendedPitchLocationXY } from "@/lib/match/pitcherBatterFight/pitcherSide/getIntendedPitchLocationXY";
+import { getAdjustedCommand } from "@/lib/match/pitcherBatterFight/pitcherSide/getAdjustedCommand";
 export function generatePitchLocation(pitchType:string, record:any) {
     const STRIKEZONE_WIDTH = 43.18;
     const STRIKEZONE_HEIGHT = record.batter.height * 0.5635 - record.batter.height * 0.2764 
