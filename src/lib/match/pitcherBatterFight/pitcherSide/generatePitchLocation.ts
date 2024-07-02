@@ -11,7 +11,7 @@ export function generatePitchLocation(pitchType:string, record:any) {
     const [intendedLocationX, intendedLocationY]:number[] = getIntendedPitchLocationXY(intention, direction, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT);
     //adjust command based on situation and mentality.
     const adjustedCommand:number = getAdjustedCommand(record)
-    const [locationX, locationY]:number[] = getPitchLocationXY(intendedLocationX, intendedLocationY, record.pitcher.command, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT); 
+    const [locationX, locationY]:number[] = getPitchLocationXY(intendedLocationX, intendedLocationY, adjustedCommand, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT); 
     return [locationX, locationY]
 
 

@@ -63,7 +63,8 @@ model Player {
   battingAbility Int
   pitchingAbility Int
   // Secondary Stats
-
+  currentStamina Int
+  condition Int
   stuff Int
   // 
   pitchSpeed Int

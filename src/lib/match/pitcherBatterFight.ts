@@ -1,17 +1,19 @@
 import { generatePitchType } from "@/lib/match/pitcherBatterFight/pitcherSide/generatePitchType";
 import { getSwingOrWait } from "@/lib/match/pitcherBatterFight/batterSide/getSwingOrWait";
 import {generatePitchLocation} from "@/lib/match/pitcherBatterFight/pitcherSide/generatePitchLocation";
+import { getPitchSpeed } from "@/lib/match/pitcherBatterFight/pitcherSide/getPitchSpeed";
 export function pitcherBatterFight(record:any) {
     const pitchType = generatePitchType(record.pitcher);
-    const pitchArea = generatePitchLocation(pitchType, record);
+    const [locationX, locationY]:number[] = generatePitchLocation(pitchType, record);
     const pitchObject = {
         speed: 0,
         pitchType: pitchType,
     }
-    // based on location, get the actual coordinates
+    console.log(record.batter)
     // determine speed
+    const pitchSpeed:number = getPitchSpeed(pitchType, record.pitcher.pitchSpeed, record.pitcherPosition, record.pitcher.condition);
     // swing or wait;
-    const swingOrWait = getSwingOrWait()
+    const swingOrWait = getSwingOrWait(pitchType, [locationX, locationY], record)
     // if swing, hit or miss
     // if hit, return the result
     while (record.strikeCount < 3 || record.ballCount < 4) {

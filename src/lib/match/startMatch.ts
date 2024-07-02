@@ -10,6 +10,7 @@ export function startMatch (match:any, actions:any) {
     const record = {
         pitches: [],
         pitcher: homeStartingLineup.pitcher,
+        pitcherPosition: "SP",
         batter: awayBattingOrder[homeBattingCount],
         firstbase: null,
         secondbase: null,

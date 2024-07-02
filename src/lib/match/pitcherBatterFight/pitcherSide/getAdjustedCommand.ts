@@ -80,9 +80,28 @@ export function getAdjustedCommand(record:any) {
     let adjustedStress = Math.round((record.pitcher.mentality - stressScore)*0.8);
 
 
-    let adjustedCommand:number = Math.max(0, record.pitcher.command + adjustedStress);
+    let adjustedCommand:number = Math.max(1, record.pitcher.command + adjustedStress);
     // cannot exeed original command stat
-    adjustedCommand = Math.max(adjustedCommand, record.pitcher.command);
-
+    if (adjustedCommand > record.pitcher.command) {
+        adjustedCommand = record.pitcher.command;
+    }
+    
+    // command changing due to pitcher condition
+    if (record.pitcher.condition > 50) {
+        for (let count = 0; count < record.pitcher.condition - 50; count += 5) {
+            adjustedCommand += 1
+        }
+    } else {
+        for (let count = 50; count > record.pitcher.condition; count -= 5) {
+            adjustedCommand -= 1
+        }
+    }
+    // cannot exeed 99 or be below 1
+    if (adjustedCommand > 99) {
+        adjustedCommand = 99;
+    } 
+    if (adjustedCommand < 1) {
+        adjustedCommand = 1
+    }
     return adjustedCommand;
 }

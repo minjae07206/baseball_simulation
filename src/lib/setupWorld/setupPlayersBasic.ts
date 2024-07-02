@@ -58,10 +58,12 @@ export const setupPlayersBasic = async () => {
                 const durability = getRandomNumberBetweenTwoInputs(1, 99);
                 const creativity = getRandomNumberBetweenTwoInputs(1, 99);
                 const stamina = getRandomNumberBetweenTwoInputs(30, 95);
+                const currentStamina = stamina;
                 const adaptability = getRandomNumberBetweenTwoInputs(1, 99);
                 const DynamicVisualAcuity = getRandomNumberBetweenTwoInputs(1, 99);
                 const buntAbility = generateBuntAbility(mainPosition);
                 const potential = getRandomNumberBetweenTwoInputs(1, 99);
+                const condition = getRandomNumberBetweenTwoInputs(1, 99);
                 const battingAbility = generateBattingAbility(mainPosition);
                 const pitchingAbility = generatePitchingAbility(mainPosition);
                 const attributesEffectingPitchSpeed = {shoulderPower, legPower, corePower};
@@ -116,10 +118,12 @@ export const setupPlayersBasic = async () => {
                     againstSidearmUnderPitcher: againstSidearmUnderPitcher,
                     creativity: creativity,
                     stamina: stamina,
+                    currentStamina: currentStamina,
                     adaptability: adaptability,
                     DynamicVisualAcuity: DynamicVisualAcuity,
                     buntAbility: buntAbility,
                     potential: potential,
+                    condition: condition,
                     pitchSpeed: pitchSpeed,
                     pitchMovement: pitchMovement,
                     pitchSpin: pitchSpin,
