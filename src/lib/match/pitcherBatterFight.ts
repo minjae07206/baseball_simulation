@@ -2,18 +2,27 @@ import { generatePitchType } from "@/lib/match/pitcherBatterFight/pitcherSide/ge
 import { getSwingOrWait } from "@/lib/match/pitcherBatterFight/batterSide/getSwingOrWait";
 import {generatePitchLocation} from "@/lib/match/pitcherBatterFight/pitcherSide/generatePitchLocation";
 import { getPitchSpeed } from "@/lib/match/pitcherBatterFight/pitcherSide/getPitchSpeed";
+import { getIsInStrikeZone } from "@/lib/match/pitcherBatterFight/batterSide/getIsInStrikeZone";
+import { getZone } from "@/lib/match/pitcherBatterFight/batterSide/getZone";
 export function pitcherBatterFight(record:any) {
+    const STRIKEZONE_WIDTH = 43.18; //cm
+    const STRIKEZONE_HEIGHT = record.batter.height * 0.5635 - record.batter.height * 0.2764 
+    const BALL_DIAMETER = 7.4; //cm
     const pitchType = generatePitchType(record.pitcher);
-    const [locationX, locationY]:number[] = generatePitchLocation(pitchType, record);
+    const [locationX, locationY]:number[] = generatePitchLocation(pitchType, record, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT);
     const pitchObject = {
         speed: 0,
         pitchType: pitchType,
     }
-    console.log(record.batter)
     // determine speed
     const pitchSpeed:number = getPitchSpeed(pitchType, record.pitcher.pitchSpeed, record.pitcherPosition, record.pitcher.condition);
+    // initially determine if ball or strike
+    const isInStrikeZone:boolean = getIsInStrikeZone(locationX, locationY, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT, BALL_DIAMETER);
+    // next, classify the zone of the pitch.
     // swing or wait;
-    const swingOrWait = getSwingOrWait(pitchType, [locationX, locationY], record)
+    // based on which zone the pitch was thrown, initial swing probability will be determined.
+    const swingProbabilityBasedOnZone = getZone(locationX, locationY, isInStrikeZone, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT)
+    const swingOrWait = getSwingOrWait(pitchType, [locationX, locationY], record, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT)
     // if swing, hit or miss
     // if hit, return the result
     while (record.strikeCount < 3 || record.ballCount < 4) {

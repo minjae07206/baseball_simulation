@@ -1,17 +1,21 @@
-export function getSwingOrWait(pitchType:string, [locationX, locationY]:number[], record:any) {
+export function getSwingOrWait(pitchType:string, [locationX, locationY]:number[], record:any, STRIKEZONE_WIDTH:number, STRIKEZONE_HEIGHT:number) {
+
     // things needed:
     /**
-     * 선구안 -> 선구안이 좋으면 ?????. 스트라이크에서 멀리 떨어지는 공은 참고, 대신에 걸치는 공도 스윙을 안한다.
+     * 선구안 -> 선구안이 좋으면 ?????. 스트라이크에서 멀리 떨어지는 공은 참고, 스트라이크 존 안에 들어오는 공 위주로 스윙한다. 
      * 선구안이 좋아도 멀리 있는 공을 타격하는 배드볼 히터가 있다????? 아니다.
      * 이치로는 존 밖에 있는 공에 대한 헛스윙율이 낮았고, 컨택율은 높다.
+     * 고영민은 삼진도 높고 볼넷도 높다. 본인 존이 매우 작다.
      * 선구안이 안좋으면 멀리떨어지는 공에도 스윙을 하고, 걸치는 공에도 스윙을 한다.
      * left or right hitter . if both, need pitcher to decide 투구 궤적에 따른 스윙여부 결정
      * activeness? more likeley to swing?
+     * 선구안이 좋으면 좋을수록 스트라이크존 안에 있는 공만 때린다. 
+     * 적극성이 좋으면 스트라이크가 오는 공에 거의 무조건 스윙이 나가고, 아니면 기다린다.(선구안이 좋아도) 
      * 
      * ball count. if 3 ball, usually wait. if 2 strike, likely to swing to bad balls
      * pitch location
      * 게스히터 vs 공보고공친다.
-     * 극단적 스윙?
+     * 극단적 스윙? 스윙노스윙과는 상관없음
      * 게스히팅을 하면 홈런 확률 업, 루킹 업
      * 컨택이 좋으면 공보고 공치기?
      * 컨디션?
@@ -21,6 +25,16 @@ export function getSwingOrWait(pitchType:string, [locationX, locationY]:number[]
      * 볼카운트가 3볼이면 노스윙
      * 볼카운트가 2스트라이크면 스윙
      *
-     */
+     * 1. 공의 위치를 판단해 얼마나 존에 떨어져있는지를 판단. 즉, 거리를 측정해야 한다.
+     * 2. 볼이라면, 선구안이 안좋을수록 멀리 있는 공도 스윙확률이 올라가고, 선구안이 진짜 좋으면 아예 밖에 있는 공은 스윙을 안한다. 
+     * 2. 스트라이크라면, 기본적으로 선구안이 좋으면 스윙율이 높고, 아니면 낮다. 
+     * 3. 
+     * 3. 적극성이 높을수록 존에 들어온 공에 스윙을 하고, 적극성이 낮으면 선구안이 스윙해야 하는 공이라고 해도 안한다.
+     * 스트라이크라면 
+     * 3. 볼카운트가 불리하면 스윙 확율이 올라가고, 유리하면 내려간다. 
+     * 4. 각 상성을 빼고 해서 이긴쪽이 유리한쪽으로. 
+     * 예) 좌좌에서 좌투수가 우세하면 볼일때는 스윙확률이 올라가고(헛스윙일 가능성이니까), 스트라이크일때는 스윙확률이 내려간다.
+     * 게스히터, 공보고 공치기는 나중에 구현할 수도 있다.
+     */ 
     return "swing";
 }

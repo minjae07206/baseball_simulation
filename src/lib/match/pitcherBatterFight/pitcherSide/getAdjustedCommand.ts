@@ -1,4 +1,6 @@
-export function getAdjustedCommand(record:any) {
+import { PitchType } from "@prisma/client";
+
+export function getAdjustedCommand(pitchType:string, record:any) {
     // command decreases/increases based on mentality and the situation. 
     // if the difference between the scores is more than *, the command is effected.
     let stressScore = 0;
@@ -96,6 +98,19 @@ export function getAdjustedCommand(record:any) {
             adjustedCommand -= 1
         }
     }
+
+    // command change due to pitchType stat
+    console.log()
+    if (record.pitcher.pitchTypeStats[0][pitchType] > 50) {
+        for (let count = 0; count < record.pitcher.pitchTypeStats[0][pitchType] - 50; count += 2) {
+            adjustedCommand += 1
+        }
+    } else {
+        for (let count = 50; count > record.pitcher.pitchTypeStats[0][pitchType]; count -= 2) {
+            adjustedCommand -= 1
+        }
+    }
+
     // cannot exeed 99 or be below 1
     if (adjustedCommand > 99) {
         adjustedCommand = 99;
