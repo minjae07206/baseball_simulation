@@ -21,8 +21,8 @@ export function pitcherBatterFight(record:any) {
     // next, classify the zone of the pitch.
     // swing or wait;
     // based on which zone the pitch was thrown, initial swing probability will be determined.
-    const swingProbabilityBasedOnZone = getZone(locationX, locationY, isInStrikeZone, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT)
-    const swingOrWait = getSwingOrWait(pitchType, [locationX, locationY], record, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT)
+    const zone = getZone(locationX, locationY, isInStrikeZone, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT)
+    const swingOrWait = getSwingOrWait(isInStrikeZone, zone, pitchType, [locationX, locationY], record, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT)
     // if swing, hit or miss
     // if hit, return the result
     while (record.strikeCount < 3 || record.ballCount < 4) {
