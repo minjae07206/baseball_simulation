@@ -8,8 +8,10 @@ import { generatePitchingArmStyle } from '@/lib/createOrEditPlayer/pitchingArmSt
 import { getRandomNumberBetweenTwoInputs } from '@/lib/random/getRandomNumber';
 import { generateAgainstLeftHitter, generateAgainstRightHitter, generateAgainstLeftPitcher, generateAgainstRightPitcher, generateAgainstSidearmUnderPitcher} from '@/lib/createOrEditPlayer/against';
 import { generateBuntAbility } from '@/lib/createOrEditPlayer/buntAbility';
+import { generatePitchingLeftRightGap, generateBattingLeftRightGap } from '@/lib/createOrEditPlayer/leftRightGap';
 import { generatePitchingAbility } from '@/lib/createOrEditPlayer/pitchingAbility';
 import { generateBattingAbility } from '@/lib/createOrEditPlayer/battingAbility';
+import { generateMainArm } from '@/lib/createOrEditPlayer/mainArm';
 import { generateStuff } from '@/lib/createOrEditPlayer/stuff';
 import { generatePitchSpeed } from '@/lib/createOrEditPlayer/pitchSpeed';
 import { generatePitchMovement } from '@/lib/createOrEditPlayer/pitchMovement';
@@ -66,6 +68,9 @@ export const setupPlayersBasic = async () => {
                 const condition = getRandomNumberBetweenTwoInputs(1, 99);
                 const battingAbility = generateBattingAbility(mainPosition);
                 const pitchingAbility = generatePitchingAbility(mainPosition);
+                const pitchingLeftRightGap = generatePitchingLeftRightGap(battingPitchingArm);
+                const battingLeftRightGap = generateBattingLeftRightGap(battingPitchingArm);
+                const mainArm = generateMainArm(battingPitchingArm);
                 const attributesEffectingPitchSpeed = {shoulderPower, legPower, corePower};
                 const pitchSpeed = generatePitchSpeed(attributesEffectingPitchSpeed);
                 const attributesEffectingPitchMovement = {shoulderPower, wristPower, pitchingAbility};
@@ -127,8 +132,11 @@ export const setupPlayersBasic = async () => {
                     pitchSpeed: pitchSpeed,
                     pitchMovement: pitchMovement,
                     pitchSpin: pitchSpin,
+                    battingLeftRightGap: battingLeftRightGap,
                     battingAbility: battingAbility,
+                    pitchingLeftRightGap: pitchingLeftRightGap,
                     pitchingAbility: pitchingAbility,
+                    mainArm: mainArm,
                     deception: deception,
                     releasePoint: releasePoint,
                     stuff: generateStuff(attributesEffectingStuff),

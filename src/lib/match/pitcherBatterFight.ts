@@ -4,11 +4,17 @@ import {generatePitchLocation} from "@/lib/match/pitcherBatterFight/pitcherSide/
 import { getPitchSpeed } from "@/lib/match/pitcherBatterFight/pitcherSide/getPitchSpeed";
 import { getIsInStrikeZone } from "@/lib/match/pitcherBatterFight/batterSide/getIsInStrikeZone";
 import { getZone } from "@/lib/match/pitcherBatterFight/batterSide/getZone";
+import { getCurrentArm } from "@/lib/match/pitcherBatterFight/toolsForBoth/currentArm";
 export function pitcherBatterFight(record:any) {
     const STRIKEZONE_WIDTH = 43.18; //cm
     const STRIKEZONE_HEIGHT = record.batter.height * 0.5635 - record.batter.height * 0.2764 
     const BALL_DIAMETER = 7.4; //cm
     const pitchType = generatePitchType(record.pitcher);
+    // determine currentArm
+    const [pitcherCurrentArm, hitterCurrentArm] = getCurrentArm(record.pitcher, record.batter);
+    record.pitcherCurrentArm = pitcherCurrentArm;
+    record.hitterCurrentArm = hitterCurrentArm;
+    console.log(record)
     const [locationX, locationY]:number[] = generatePitchLocation(pitchType, record, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT);
     const pitchObject = {
         speed: 0,

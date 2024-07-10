@@ -14,9 +14,10 @@ export function generateBattingPitchingArm(mainPosition: string): string {
             {value: "RightRight", probability: 0.72},
             {value: "RightLeft", probability: 0.005},
             {value: "RightBoth", probability: 0.004},
-            {value: "LeftBoth", probability: 0.0008},
-            {value: "BothLeft", probability: 0.0001},
-            {value: "BothRight", probability: 0.0001},
+            {value: "LeftBoth", probability: 0.00087},
+            {value: "BothLeft", probability: 0.00001},
+            {value: "BothRight", probability: 0.00001},
+            {value: "BothBoth", probability: 0.00001}
         ]
         battingPitchingArm = getRandomValueBasedOnProbability(possibleArmWithProbability)
     } else if (

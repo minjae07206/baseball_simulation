@@ -1,4 +1,5 @@
 import { PitchType } from "@prisma/client";
+import { getAdjustedStatForBoth } from "../toolsForBoth/adjustedStatForBoth";
 
 export function getAdjustedCommand(pitchType:string, record:any) {
     // command decreases/increases based on mentality and the situation. 
@@ -100,7 +101,6 @@ export function getAdjustedCommand(pitchType:string, record:any) {
     }
 
     // command change due to pitchType stat
-    console.log()
     if (record.pitcher.pitchTypeStats[0][pitchType] > 50) {
         for (let count = 0; count < record.pitcher.pitchTypeStats[0][pitchType] - 50; count += 2) {
             adjustedCommand += 1
@@ -110,6 +110,9 @@ export function getAdjustedCommand(pitchType:string, record:any) {
             adjustedCommand -= 1
         }
     }
+
+    // command changing if the pitcher is a "Both" pitcher.
+    adjustedCommand = getAdjustedStatForBoth(adjustedCommand, record.pitcherCurrentArm, record.pitcher.mainArm, record.pitcher.pitchingLeftRightGap);
 
     // cannot exeed 99 or be below 1
     if (adjustedCommand > 99) {

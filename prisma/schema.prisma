@@ -54,6 +54,7 @@ model Player {
   againstLeftPitcher Int
   againstRightPitcher Int
   againstSidearmUnderPitcher Int
+  mainArm String
   creativity Int
   stamina Int
   adaptability Int
@@ -62,6 +63,8 @@ model Player {
   potential Int
   battingAbility Int
   pitchingAbility Int
+  pitchingLeftRightGap Int
+  battingLeftRightGap Int
   // Secondary Stats
   currentStamina Int
   condition Int

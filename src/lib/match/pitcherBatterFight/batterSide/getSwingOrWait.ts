@@ -1,3 +1,5 @@
+import { getAdjustedStatForBoth } from "../toolsForBoth/adjustedStatForBoth";
+
 export function getSwingOrWait(isInStrikeZone:boolean, zone:string, pitchType:string, [locationX, locationY]:number[], record:any, STRIKEZONE_WIDTH:number, STRIKEZONE_HEIGHT:number) {
 
     // things needed:
@@ -39,7 +41,6 @@ export function getSwingOrWait(isInStrikeZone:boolean, zone:string, pitchType:st
      * 2. 볼카운트가 매우 유리하면 스윙하지 않는다. 매우 적극적이라면 스윙할수도?
      * 2.컨디션, 상성은 맨 마지막에 결정. 컨디션, 상성, 컨디션은 플러스 마이너스 요인이다.
      */ 
-    console.log(record)
     let activenessProportion:number = 0;
     let battingEyeProportion:number = 0;
     let stuffProportion:number = 0;
@@ -140,6 +141,7 @@ export function getSwingOrWait(isInStrikeZone:boolean, zone:string, pitchType:st
         stuffProportion = 0.001;
     }
     let swingProbability:number = 0;
+
     if (isInStrikeZone) {
         swingProbability = initialSwingProbability + ((record.batter.battingEye - 50) * battingEyeProportion) - ((record.pitcher.stuff - 50) * stuffProportion);
     } else {
@@ -148,25 +150,5 @@ export function getSwingOrWait(isInStrikeZone:boolean, zone:string, pitchType:st
     
     swingProbability = Math.max(swingProbability, 1);
     swingProbability = Math.min(0, swingProbability);
-    let hitterArm:string = "";
-    let pitcherArm:string = "";
-    let againstHitterStat = 0;
-    let againstPitcherStat = 0;
-    // most of the time, its just going to be left and right.
-    if (record.batter.battingPitchingArm.slice(-5) === "Left") {
-        hitterArm = "Left";
-    } else if (record.batter.battingPitchingArm.slice(-5) === "Right") {
-        hitterArm = "Right"
-    }
-
-    if (record.pitcher.battingPitchingArm.slice(0,4) === "Left") {
-        pitcherArm = "Left";
-    } else if (record.batter.battingPitchingArm.slice(0, 5) === "Right") {
-        pitcherArm = "Right"
-    }
-    // odd cases when one or both side is "Both".
-    if (record.batter.battingPitchingArm.slice(-5) === "Both" && record.pitcher.battingPitchingArm.slice(0, 4) === "Both") {
-        
-    }
     return "swing";
 }

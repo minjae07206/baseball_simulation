@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET(){
     const matchData:MatchType = await db.match.findFirst({
         where: {
-            id: "clxvpdmdo0001ormr8aesbz65"
+            id: "clyffw5j800b5je81sa0yi2cy"
         }
     });
     return NextResponse.json(matchData);
