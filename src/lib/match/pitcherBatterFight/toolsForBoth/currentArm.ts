@@ -45,10 +45,6 @@ export function getCurrentArm (pitcher:any, batter:any) {
             pitcherArm = "Right";
         }
     }
-    // check if the pitcher is sidearm or under. If so, the pitcher arm becomes sidearm under
-    if (pitcher.pitchingArmStyle === "under" || pitcher.pitchingArmStyle === "sidearm") {
-        pitcherArm = "sidearmUnder";
-    }
 
     return [pitcherArm, hitterArm];
 }
