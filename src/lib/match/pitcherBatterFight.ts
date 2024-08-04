@@ -5,7 +5,7 @@ import { getPitchSpeed } from "@/lib/match/pitcherBatterFight/pitcherSide/getPit
 import { getIsInStrikeZone } from "@/lib/match/pitcherBatterFight/batterSide/getIsInStrikeZone";
 import { getZone } from "@/lib/match/pitcherBatterFight/batterSide/getZone";
 import { getCurrentArm } from "@/lib/match/pitcherBatterFight/toolsForBoth/currentArm";
-import { getContactOrMissOrWait } from "@/lib/match/pitcherBatterFight/batterSide/getContactOrMiss";
+import { getContactOrMiss } from "@/lib/match/pitcherBatterFight/batterSide/getContactOrMiss";
 export function pitcherBatterFight(record:any) {
     const STRIKEZONE_WIDTH = 43.18; //cm
     const STRIKEZONE_HEIGHT = record.batter.height * 0.5635 - record.batter.height * 0.2764 
@@ -28,9 +28,8 @@ export function pitcherBatterFight(record:any) {
     // next, classify the zone of the pitch.
     // swing or wait;
     // based on which zone the pitch was thrown, initial swing probability will be determined.
-    const zone = getZone(locationX, locationY, isInStrikeZone, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT)
+    const zone = getZone(locationX, locationY, isInStrikeZone, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT);
     const swingOrWait = getSwingOrWaitOrContact(isInStrikeZone, zone, pitchType, [locationX, locationY], record, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT);
-    const contactOrMiss = getContactOrMissOrWait(swingOrWait, zone, [locationX, locationY], record, STRIKEZONE_WIDTH, STRIKEZONE_HEIGHT);
     // const getContactResult // initial result. flyball, linedrive, groundball, hit
     // check Error = if initial result is out, check final result
     // 
