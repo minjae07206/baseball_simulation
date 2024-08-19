@@ -27,6 +27,7 @@ import { generateHomerunPower } from '@/lib/createOrEditPlayer/homerunPower';
 import { generateGapPower } from '@/lib/createOrEditPlayer/gapPower';
 import { generateBaseRunning } from '@/lib/createOrEditPlayer/baseRunning';
 import { generateHeight } from '@/lib/createOrEditPlayer/height';
+import { generateBattingDirection } from '@/lib/createOrEditPlayer/battingDirection';
 var koreanNameGenerator = require("korean-name-generator");
 export const setupPlayersBasic = async () => {
     const generator = teamNameGenerator()
@@ -61,6 +62,7 @@ export const setupPlayersBasic = async () => {
                 const creativity = getRandomNumberBetweenTwoInputs(1, 99);
                 const stamina = getRandomNumberBetweenTwoInputs(30, 95);
                 const currentStamina = stamina;
+                const battingDirection = generateBattingDirection();
                 const adaptability = getRandomNumberBetweenTwoInputs(1, 99);
                 const DynamicVisualAcuity = getRandomNumberBetweenTwoInputs(1, 99);
                 const buntAbility = generateBuntAbility(mainPosition);
@@ -139,6 +141,7 @@ export const setupPlayersBasic = async () => {
                     mainArm: mainArm,
                     deception: deception,
                     releasePoint: releasePoint,
+                    battingDirection: battingDirection,
                     stuff: generateStuff(attributesEffectingStuff),
                     command: generateControl(attributesEffectingCommand),
                     pickoff: generatePickoff(attributesEffectingPickoff),

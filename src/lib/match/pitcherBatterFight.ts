@@ -1,5 +1,5 @@
 import { generatePitchType } from "@/lib/match/pitcherBatterFight/pitcherSide/generatePitchType";
-import { getSwingOrWaitOrContact } from "@/lib/match/pitcherBatterFight/batterSide/getSwingOrWait";
+import { getSwingOrWaitOrContact } from "@/lib/match/pitcherBatterFight/batterSide/getSwingOrWaitOrContact";
 import {generatePitchLocation} from "@/lib/match/pitcherBatterFight/pitcherSide/generatePitchLocation";
 import { getPitchSpeed } from "@/lib/match/pitcherBatterFight/pitcherSide/getPitchSpeed";
 import { getIsInStrikeZone } from "@/lib/match/pitcherBatterFight/batterSide/getIsInStrikeZone";

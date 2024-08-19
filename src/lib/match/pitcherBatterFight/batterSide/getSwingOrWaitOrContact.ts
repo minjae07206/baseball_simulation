@@ -1,6 +1,8 @@
 import { getAdjustedStatForBoth } from "../toolsForBoth/adjustedStatForBoth";
 import { getContactOrMiss } from "./getContactOrMiss";
 import { getNetAgainstStat } from "./getNetAgainstStat";
+import { getBasicContactResult } from "./getBasicContactResult";
+import { getFoulOrNot } from "./getFoulOrNot";
 
 export function getSwingOrWaitOrContact(isInStrikeZone:boolean, zone:string, pitchType:string, [locationX, locationY]:number[], record:any, STRIKEZONE_WIDTH:number, STRIKEZONE_HEIGHT:number) {
 
@@ -373,14 +375,16 @@ export function getSwingOrWaitOrContact(isInStrikeZone:boolean, zone:string, pit
 
     if (result === "miss") {
         return result;
-    } else {
-        result = getContactResult(record, initialBallExitSpeed, initialBallExitHorizontalAngle, initialBallExitVerticalAngle)
-        // power, stuff, contact, gap-power
-        // gap Power leads to more doubles.
-        // normal distribution
-        // for each zone, determine good-contact-probability
-        // and based on contact ability, +- the good contact probability. send this 
-        // OR mean exit velocity based on zones. 
-        // and based on contact ability, the standard deviation should be lower.
-    }
+    } 
+    // at this point, it means that the ball has been contacted by the bat.
+    //first determine if foul or fair    
+    result = getFoulOrNot(record);
+    if (result === "foul") {
+        return result
+        // even when it is a foul, it can be a catch which can allow the runners to tag up.
+    }    
+    // next, determine whether the contact is a, linedrive, groundball, infield flyball, flyball.
+    const basicContactResult = getBasicContactResult(record);
+    
+    return result;
 }

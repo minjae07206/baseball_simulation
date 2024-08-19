@@ -62,6 +62,7 @@ model Player {
   buntAbility Int
   potential Int
   battingAbility Int
+  battingDirection String
   pitchingAbility Int
   pitchingLeftRightGap Int
   battingLeftRightGap Int
